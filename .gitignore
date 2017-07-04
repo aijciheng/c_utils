@@ -1,2 +1,3 @@
 *.a
 *.o
+test/test_*/test_*
