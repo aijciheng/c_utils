@@ -44,6 +44,27 @@ int main(int argc, char **argv) {
     assert(map_contain(map, "key0") == 1);
     assert(map_contain(map, "key567") == 0);
 
+    // test iterator
+    MapIterator iterator;
+    map_iterator(map, &iterator);
+    int count = 0;
+    for (CMapNode *node = map_next(&iterator); node != NULL; node = map_next(&iterator)) {
+        count++;
+    }
+    assert(count == COUNT - 1);    
+    printf("count : %d\n", count);
+
+    // test foreach
+    char *tkey;
+    void *tvalue;
+    count = 0;
+    map_foreach(map, tkey, tvalue) {
+       count++; 
+    }
+    assert(count == COUNT - 1);
+    printf("count : %d\n", count);
+
+
     start_time = get_current_time();
     long temp_start_time, temp_end_time, cost_time = 0;
     for (int i = 0; i < COUNT; i++) {

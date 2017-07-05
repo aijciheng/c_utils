@@ -120,6 +120,54 @@ void destroy_map(CMap *cmap) {
     }
 }
 
+void map_iterator(CMap *cmap, MapIterator *iterator) {
+    if (cmap == NULL || iterator == NULL) {
+        return;
+    }
+    iterator->index = 0;
+    iterator->node = NULL;
+    iterator->cmap = cmap;
+}
+
+CMapNode *map_next(MapIterator *iterator) {
+    if (iterator == NULL) {
+        return NULL;
+    }
+    if (iterator->cmap == NULL) {
+        return NULL;
+    }
+    for (int i = iterator->index; i < iterator->cmap->capacity; i++) {
+        CMapNode *node = iterator->node;
+        if (node != NULL && node->next != NULL) {
+            iterator->node = node->next;
+            return node->next;
+        } else {
+            while (i < iterator->cmap->capacity && (node = iterator->cmap->buckets[i++]) == NULL);
+            iterator->node = node;
+            iterator->index = i;
+            return node;
+        }
+    }
+
+    return NULL;
+}
+
+char* mapnode_key(CMapNode *node) {
+    if (node == NULL) {
+        return NULL;
+    }
+
+    return node->key;
+}
+
+void* mapnode_value(CMapNode *node) {
+    if (node == NULL) {
+        return NULL;
+    }
+
+    return node->value;
+}
+
 static void put_entry(CMap *cmap, int i, char *key, void *value) {
     if (cmap->size >= cmap->threshold) {
         resize(cmap, cmap->capacity * 2);
