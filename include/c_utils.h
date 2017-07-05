@@ -5,6 +5,8 @@
 #include "c_list.h"
 #include "c_set.h"
 
+#include "c_string.h"
+
 #include "system.h"
 
 #endif
