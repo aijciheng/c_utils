@@ -1,5 +1,5 @@
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef C_UTILS_H_
+#define C_UTILS_H_
 
 #include "c_map.h"
 #include "c_list.h"
