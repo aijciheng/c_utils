@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-LinkedList* create_default_linkedlist() {
-    LinkedList *linkedlist = (LinkedList*)malloc(sizeof(LinkedList));
+CLinkedList* create_default_linkedlist() {
+    CLinkedList *linkedlist = (CLinkedList*)malloc(sizeof(CLinkedList));
     if (linkedlist != NULL) {
         linkedlist->size = 0;
         linkedlist->root = NULL;
@@ -13,11 +13,11 @@ LinkedList* create_default_linkedlist() {
     return linkedlist;
 }
 
-void linkedlist_add_first(LinkedList *linkedlist, void *value) {
+void linkedlist_add_first(CLinkedList *linkedlist, void *value) {
     if (linkedlist == NULL || value == NULL) {
         return;
     }
-    LinkedNode *linked_node = (LinkedNode*)malloc(sizeof(LinkedNode));
+    CLinkedNode *linked_node = (CLinkedNode*)malloc(sizeof(CLinkedNode));
     if (linked_node == NULL) {
         return;
     }
@@ -36,7 +36,7 @@ void linkedlist_add_first(LinkedList *linkedlist, void *value) {
     }
 }
 
-void* linkedlist_first(LinkedList *linkedlist) {
+void* linkedlist_first(CLinkedList *linkedlist) {
     if (linkedlist == NULL || linkedlist->root == NULL) {
         return NULL;
     }    
@@ -44,12 +44,12 @@ void* linkedlist_first(LinkedList *linkedlist) {
     return linkedlist->root->value;
 }
 
-void* linkedlist_remove_first(LinkedList *linkedlist) {
+void* linkedlist_remove_first(CLinkedList *linkedlist) {
     if (linkedlist == NULL || linkedlist->root == NULL) {
         return NULL;
     }
 
-    LinkedNode *node = linkedlist->root;
+    CLinkedNode *node = linkedlist->root;
     if (node != NULL) {
         if (node->next != NULL) {
             node->next->pre = NULL;
@@ -67,12 +67,12 @@ void* linkedlist_remove_first(LinkedList *linkedlist) {
     return NULL;
 }
 
-void linkedlist_add_last(LinkedList *linkedlist, void *value) {
+void linkedlist_add_last(CLinkedList *linkedlist, void *value) {
     if (linkedlist == NULL || value == NULL) {
         return;
     }
 
-    LinkedNode *linked_node = (LinkedNode*)malloc(sizeof(LinkedNode));
+    CLinkedNode *linked_node = (CLinkedNode*)malloc(sizeof(CLinkedNode));
     if (linked_node == NULL) {
         return;
     }
@@ -92,7 +92,7 @@ void linkedlist_add_last(LinkedList *linkedlist, void *value) {
 
 }
 
-void* linkedlist_last(LinkedList *linkedlist) {
+void* linkedlist_last(CLinkedList *linkedlist) {
     if (linkedlist == NULL || linkedlist->end == NULL) {
         return NULL;
     }
@@ -100,12 +100,12 @@ void* linkedlist_last(LinkedList *linkedlist) {
     return linkedlist->end->value;
 }
 
-void* linkedlist_remove_last(LinkedList *linkedlist) {
+void* linkedlist_remove_last(CLinkedList *linkedlist) {
     if (linkedlist == NULL || linkedlist == NULL) {
         return NULL;
     }
 
-    LinkedNode *node = linkedlist->end;
+    CLinkedNode *node = linkedlist->end;
     if (node != NULL) {
         if (node->pre != NULL) {
             node->pre->next = NULL;
@@ -122,7 +122,7 @@ void* linkedlist_remove_last(LinkedList *linkedlist) {
     return NULL;
 }
 
-int linkedlist_size(LinkedList *linkedlist) {
+int linkedlist_size(CLinkedList *linkedlist) {
     if (linkedlist == NULL) {
         return 0;
     } 
@@ -130,13 +130,13 @@ int linkedlist_size(LinkedList *linkedlist) {
     return linkedlist->size;
 }
 
-void destroy_linkedlist(LinkedList *linkedlist) {
+void destroy_linkedlist(CLinkedList *linkedlist) {
     if (linkedlist == NULL) {
         return;
     }
 
-    LinkedNode *node = linkedlist->root;
-    LinkedNode *next = NULL;
+    CLinkedNode *node = linkedlist->root;
+    CLinkedNode *next = NULL;
     while (node != NULL) {
         next = node->next;
         free(node);

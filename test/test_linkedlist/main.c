@@ -7,7 +7,7 @@
 
 int main(int argc, char **argv) {
     // create linkedlist
-    LinkedList *linked_list = create_default_linkedlist();
+    CLinkedList *linked_list = create_default_linkedlist();
 
     // ----------------------------stack----------------------------------------
 
