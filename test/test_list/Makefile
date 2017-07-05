@@ -4,7 +4,7 @@ TARGET_OBJ=main.c
 TARGET=test_list
 
 $(TARGET):$(TARGET_OBJ)
-	gcc -o $@ $^ -I $(INCLUDE_PATH) -L $(LIB_PATH) -lutil -std=c99 -g
+	gcc -o $@ $^ -I $(INCLUDE_PATH) -L $(LIB_PATH) -lcutils -std=c99 -g
 
 .PHONY:clean
 

@@ -2,7 +2,7 @@ INCLUDE_PATH=../../include/
 LIB_PATH=../../lib/
 
 test_map:main.c
-	gcc -o $@ $^ -I $(INCLUDE_PATH) -L $(LIB_PATH) -lutil -std=c99 -g
+	gcc -o $@ $^ -I $(INCLUDE_PATH) -L $(LIB_PATH) -lcutils -std=c99 -g
 
 .PHONY:clean
 

@@ -2,7 +2,7 @@ SRC_PATH=./src/
 INCLUDE_PATH=./include/
 
 LIB_OBJ=c_map.o c_list.o c_set.o system.o 
-LIB_NAME=$(LIB_PATH)libutil.a
+LIB_NAME=$(LIB_PATH)libcutils.a
 LIB_PATH=./lib/
 
 CMD=cmd
