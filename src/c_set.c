@@ -16,7 +16,7 @@ void set_add(CSet *cset, char *value) {
         return;
     }
 
-    map_put(cset->cmap, value, NULL);
+    map_put(cset->cmap, value, value);
 }
 
 int set_size(CSet *cset) {
@@ -48,7 +48,7 @@ CSetNode* set_next(CSetIterator *iterator) {
 }
 
 char* setnode_value(CSetNode *node) {
-    return mapnode_key(node);
+    return mapnode_value(node);
 }
 
 void destroy_set(CSet *cset) {
