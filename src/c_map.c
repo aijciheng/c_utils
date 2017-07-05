@@ -120,7 +120,7 @@ void destroy_map(CMap *cmap) {
     }
 }
 
-void map_iterator(CMap *cmap, MapIterator *iterator) {
+void map_iterator(CMap *cmap, CMapIterator *iterator) {
     if (cmap == NULL || iterator == NULL) {
         return;
     }
@@ -129,7 +129,7 @@ void map_iterator(CMap *cmap, MapIterator *iterator) {
     iterator->cmap = cmap;
 }
 
-CMapNode *map_next(MapIterator *iterator) {
+CMapNode *map_next(CMapIterator *iterator) {
     if (iterator == NULL) {
         return NULL;
     }

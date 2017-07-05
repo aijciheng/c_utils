@@ -35,6 +35,22 @@ int set_contain(CSet *cset, char *value) {
     return map_contain(cset->cmap, value);
 }
 
+void set_iterator(CSet *cset, CSetIterator *iterator) {
+    if (cset == NULL || iterator == NULL) {
+        return;
+    }
+    
+    map_iterator(cset->cmap, iterator);
+}
+
+CSetNode* set_next(CSetIterator *iterator) {
+    return map_next(iterator);
+}
+
+char* setnode_value(CSetNode *node) {
+    return mapnode_key(node);
+}
+
 void destroy_set(CSet *cset) {
     if (cset == NULL) {
         return;

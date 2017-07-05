@@ -19,11 +19,11 @@ typedef struct CMap {
     CMapNode* *buckets; //存放的桶
 } CMap;
 
-typedef struct MapIterator {
+typedef struct CMapIterator {
     int index;
     CMapNode *node;
     CMap *cmap; 
-} MapIterator;
+} CMapIterator;
 
 /* 初始化map */
 CMap* create_default_map();
@@ -52,10 +52,10 @@ int map_contain(CMap *cmap, char *key);
 void destroy_map(CMap *cmap);
 
 /* map迭代器 */
-void map_iterator(CMap *cmap, MapIterator *iterator);
+void map_iterator(CMap *cmap, CMapIterator *iterator);
 
 /* 获取下一个数据 */
-CMapNode *map_next(MapIterator *iterator);
+CMapNode *map_next(CMapIterator *iterator);
 
 /* 获取key */
 char* mapnode_key(CMapNode *node);
@@ -63,10 +63,9 @@ char* mapnode_key(CMapNode *node);
 /* 获取value */
 void* mapnode_value(CMapNode *node);
 
-#define map_foreach(map, key, value) \
-    MapIterator cmap_it; \
-    map_iterator(map, &cmap_it); \
-    for(CMapNode *node = map_next(&cmap_it); \
+#define map_foreach(map, map_it, key, value) \
+    map_iterator(map, &map_it); \
+    for(CMapNode *node = map_next(&map_it); \
         node != NULL && ((key = mapnode_key(node)) && (value = (mapnode_value(node))) ); \
-        node = map_next(&cmap_it))
+        node = map_next(&map_it))
 #endif

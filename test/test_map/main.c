@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
     assert(map_contain(map, "key567") == 0);
 
     // test iterator
-    MapIterator iterator;
+    CMapIterator iterator;
     map_iterator(map, &iterator);
     int count = 0;
     for (CMapNode *node = map_next(&iterator); node != NULL; node = map_next(&iterator)) {
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     char *tkey;
     void *tvalue;
     count = 0;
-    map_foreach(map, tkey, tvalue) {
+    map_foreach(map, iterator, tkey, tvalue) {
        count++; 
     }
     assert(count == COUNT - 1);
