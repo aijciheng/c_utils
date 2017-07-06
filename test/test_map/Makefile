@@ -1,10 +1,12 @@
 INCLUDE_PATH=../../include/
 LIB_PATH=../../lib/
+TARGET_OBJ=main.c
+TARGET=test_map
 
-test_map:main.c
+$(TARGET):$(TARGET_OBJ)
 	gcc -o $@ $^ -I $(INCLUDE_PATH) -L $(LIB_PATH) -lcutils -std=c99 -g
 
 .PHONY:clean
 
 clean:
-	rm -rf test_map
+	rm -rf $(TARGET) 

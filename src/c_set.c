@@ -11,7 +11,25 @@ CSet* create_default_set() {
     return cset;
 }
 
-void set_add(CSet *cset, char *value) {
+CSet* create_set(size_t value_type_size_t) {
+    CSet *cset = (CSet*)malloc(sizeof(CSet));
+    if (cset != NULL) {
+        cset->cmap = create_map(value_type_size_t);
+    }
+    return cset;
+}
+
+CSet* create_set_with_struct(size_t value_type_size_t,
+                             long (*hash_code)(void *value),
+                             int (*value_equals)(void *value1, void *value2)) {
+    CSet *cset = (CSet*)malloc(sizeof(CSet));
+    if (cset != NULL) {
+        cset->cmap = create_map_with_struct(value_type_size_t, hash_code, value_equals);
+    }
+    return cset;
+}
+
+void set_add(CSet *cset, void *value) {
     if (cset == NULL || value == NULL) {
         return;
     }
@@ -27,7 +45,7 @@ int set_size(CSet *cset) {
     return map_size(cset->cmap);
 }
 
-int set_contain(CSet *cset, char *value) {
+int set_contain(CSet *cset, void *value) {
     if (cset == NULL || value == NULL) {
         return 0;
     }
@@ -47,7 +65,7 @@ CSetNode* set_next(CSetIterator *iterator) {
     return map_next(iterator);
 }
 
-char* setnode_value(CSetNode *node) {
+void* setnode_value(CSetNode *node) {
     return mapnode_value(node);
 }
 
