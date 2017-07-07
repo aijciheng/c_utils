@@ -5,6 +5,7 @@
 #include "c_list.h"
 #include "c_linkedlist.h"
 #include "c_set.h"
+#include "c_iterator.h"
 
 #include "c_string.h"
 

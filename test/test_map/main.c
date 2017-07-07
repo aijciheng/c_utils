@@ -86,12 +86,12 @@ void test_string_map() {
     assert(map_contain(map, "key567") == 0);
 
     // test map iterator
-    CMapIterator iterator;
-    map_iterator(map, &iterator);
+    CIterator *iterator = map_iterator(map);
     int count = 0;
-    for (CMapNode *node = map_next(&iterator); node != NULL; node = map_next(&iterator)) {
+    for (CMapNode *node = iterator_next(iterator); node != NULL; node = iterator_next(iterator)) {
         count++;
     }
+    destroy_iterator(iterator);
     assert(count == COUNT - 1);    
     printf("count : %d\n", count);
 
@@ -99,7 +99,7 @@ void test_string_map() {
     char *tkey;
     void *tvalue;
     count = 0;
-    map_foreach(map, iterator, tkey, tvalue) {
+    map_foreach(map, tkey, tvalue) {
        count++; 
     }
     assert(count == COUNT - 1);
@@ -172,12 +172,12 @@ void test_int_map() {
     printf("test int map contain is ok.\n");
 
     // test map iterator
-    CMapIterator iterator;
-    map_iterator(map, &iterator);
+    CIterator *iterator = map_iterator(map);
     int count = 0;
-    for (CMapNode *node = map_next(&iterator); node != NULL; node = map_next(&iterator)) {
+    for (CMapNode *node = iterator_next(iterator); node != NULL; node = iterator_next(iterator)) {
         count++;
     }
+    destroy_iterator(iterator);
     assert(count == COUNT - 1);    
     printf("test int map iterator is ok.\n");
 
@@ -185,7 +185,7 @@ void test_int_map() {
     int *tkey;
     char *tvalue;
     count = 0;
-    map_foreach(map, iterator, tkey, tvalue) {
+    map_foreach(map, tkey, tvalue) {
         count++;
     }
     assert(count == COUNT - 1);
@@ -252,12 +252,12 @@ void test_struct_map() {
     printf("test struct map contain is ok.\n");
 
     // test map iterator
-    CMapIterator iterator;
-    map_iterator(map, &iterator);
+    CIterator *iterator = map_iterator(map);
     int count = 0;
-    for (CMapNode *node = map_next(&iterator); node != NULL; node = map_next(&iterator)) {
+    for (CMapNode *node = iterator_next(iterator); node != NULL; node = iterator_next(iterator)) {
         count++;
     }
+    destroy_iterator(iterator);
     assert(count == COUNT - 1);    
     printf("test struct map iterator is ok.\n");
 
@@ -265,7 +265,7 @@ void test_struct_map() {
     Key *tkey;
     char *tvalue;
     count = 0;
-    map_foreach(map, iterator, tkey, tvalue) {
+    map_foreach(map, tkey, tvalue) {
         count++;
     }
     assert(count == COUNT - 1);
@@ -342,12 +342,12 @@ void test_char_array_map() {
     printf("test char array map contain is ok.\n");
 
     // test map iterator
-    CMapIterator iterator;
-    map_iterator(map, &iterator);
+    CIterator *iterator = map_iterator(map);
     int count = 0;
-    for (CMapNode *node = map_next(&iterator); node != NULL; node = map_next(&iterator)) {
+    for (CMapNode *node = iterator_next(iterator); node != NULL; node = iterator_next(iterator)) {
         count++;
     }
+    destroy_iterator(iterator);
     assert(count == COUNT - 1);    
     printf("test char array map iterator is ok.\n");
 
@@ -355,7 +355,7 @@ void test_char_array_map() {
     char *tkey;
     void *tvalue;
     count = 0;
-    map_foreach(map, iterator, tkey, tvalue) {
+    map_foreach(map, tkey, tvalue) {
        count++; 
     }
     assert(count == COUNT - 1);

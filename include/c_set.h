@@ -4,7 +4,6 @@
 #include "c_map.h"
 
 typedef CMapNode CSetNode;
-typedef CMapIterator CSetIterator;
 
 /**
  * c set简单实现-依赖CMap实现
@@ -60,10 +59,10 @@ int set_size(CSet *cset);
 int set_contain(CSet *cset, void *value);
 
 /* set迭代器 */
-void set_iterator(CSet *cset, CSetIterator *iterator);
+CIterator* set_iterator(CSet *cset);
 
-/* 获取下一个数据 */
-CSetNode* set_next(CSetIterator *iterator);
+/* 通过迭代器当前状态获取value */
+void* set_iterator_value(CIterator *iterator);
 
 /* 获取value */
 void* setnode_value(CSetNode *node);
@@ -71,9 +70,8 @@ void* setnode_value(CSetNode *node);
 /* 销毁set */
 void destroy_set(CSet *cset);
 
-#define set_foreach(set, set_it, value) \
-    set_iterator(set, &set_it); \
-    for(CSetNode *node = set_next(&set_it); \
-        node != NULL && (value = setnode_value(node)); \
-        node = set_next(&set_it))
+#define set_foreach(set, value) \
+    for(Auto_CIterator it = set_iterator(set); \
+        iterator_next(it) != NULL && (value = set_iterator_value(it));)
+
 #endif

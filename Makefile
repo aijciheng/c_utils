@@ -1,7 +1,7 @@
 SRC_PATH=./src/
 INCLUDE_PATH=./include/
 
-LIB_OBJ=c_map.o c_list.o c_linkedlist.o c_set.o c_string.o system.o 
+LIB_OBJ=c_map.o c_list.o c_linkedlist.o c_set.o c_iterator.o c_string.o system.o 
 LIB_NAME=$(LIB_PATH)libcutils.a
 LIB_PATH=./lib/
 

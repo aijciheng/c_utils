@@ -53,16 +53,20 @@ int set_contain(CSet *cset, void *value) {
     return map_contain(cset->cmap, value);
 }
 
-void set_iterator(CSet *cset, CSetIterator *iterator) {
-    if (cset == NULL || iterator == NULL) {
-        return;
+CIterator* set_iterator(CSet *cset) {
+    if (cset == NULL) {
+        return NULL;
     }
     
-    map_iterator(cset->cmap, iterator);
+    return map_iterator(cset->cmap);
 }
 
-CSetNode* set_next(CSetIterator *iterator) {
-    return map_next(iterator);
+void* set_iterator_value(CIterator *iterator) {
+    if (iterator == NULL) {
+        return NULL;
+    }
+    
+    return map_iterator_value(iterator);
 }
 
 void* setnode_value(CSetNode *node) {

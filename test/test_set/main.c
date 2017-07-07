@@ -63,19 +63,19 @@ void test_string_set() {
     printf("string set contain ok.\n");
 
     // iterator
-    CSetIterator it;
-    set_iterator(cset, &it);
+    CIterator *it = set_iterator(cset);
     int count = 0;
-    for (CSetNode *node = set_next(&it); node != NULL; node = set_next(&it)) {
+    for (CSetNode *node = iterator_next(it); node != NULL; node = iterator_next(it)) {
         count++;
     }
+    destroy_iterator(it);
     assert(count == 3);
     printf("string set iterator ok.\n");
 
     // foreach
     char *value;
     count = 0;
-    set_foreach(cset, it, value) {
+    set_foreach(cset, value) {
         count++;
     }
     assert(count == 3);
@@ -110,19 +110,19 @@ void test_int_set() {
     printf("int set contain ok.\n");
 
     // iterator
-    CSetIterator it;
-    set_iterator(cset, &it);
+    CIterator *it = set_iterator(cset);
     int count = 0;
-    for (CSetNode *node = set_next(&it); node != NULL; node = set_next(&it)) {
+    for (CSetNode *node = iterator_next(it); node != NULL; node = iterator_next(it)) {
         count++;
     }
+    destroy_iterator(it);
     assert(count == 3);
     printf("int set iterator ok.\n");
 
     // foreach
     char *value;
     count = 0;
-    set_foreach(cset, it, value) {
+    set_foreach(cset, value) {
         count++;
     }
     assert(count == 3);
@@ -157,19 +157,19 @@ void test_struct_set() {
     printf("struct set contain ok.\n");
 
     // iterator
-    CSetIterator it;
-    set_iterator(cset, &it);
+    CIterator *it = set_iterator(cset);
     int count = 0;
-    for (CSetNode *node = set_next(&it); node != NULL; node = set_next(&it)) {
+    for (CSetNode *node = iterator_next(it); node != NULL; node = iterator_next(it)) {
         count++;
     }
+    destroy_iterator(it);
     assert(count == 3);
     printf("struct set iterator ok.\n");
 
     // foreach
     char *value;
     count = 0;
-    set_foreach(cset, it, value) {
+    set_foreach(cset, value) {
         count++;
     }
     assert(count == 3);
@@ -220,19 +220,19 @@ void test_char_array_set() {
     printf("char array set contain ok.\n");
 
     // iterator
-    CSetIterator it;
-    set_iterator(cset, &it);
+    CIterator *it = set_iterator(cset);
     int count = 0;
-    for (CSetNode *node = set_next(&it); node != NULL; node = set_next(&it)) {
+    for (CSetNode *node = iterator_next(it); node != NULL; node = iterator_next(it)) {
         count++;
     }
+    destroy_iterator(it);
     assert(count == 3);
     printf("char array set iterator ok.\n");
 
     // foreach
     void *value;
     count = 0;
-    set_foreach(cset, it, value) {
+    set_foreach(cset, value) {
         count++;
     }
     assert(count == 3);

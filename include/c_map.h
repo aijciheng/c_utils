@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+#include "c_iterator.h"
+
 typedef struct CMapNode {
     void *key;
     void *value;
@@ -27,12 +29,6 @@ typedef struct CMap {
     CMapNode* *buckets; //存放的桶
     CMapKeyConf *key_conf; //key的配置信息
 } CMap;
-
-typedef struct CMapIterator {
-    int index;
-    CMapNode *node;
-    CMap *cmap; 
-} CMapIterator;
 
 /** 创建默认map
  *  key:value->(char*:void*)
@@ -92,10 +88,13 @@ int map_contain(CMap *cmap, void *key);
 void destroy_map(CMap *cmap);
 
 /* map迭代器 */
-void map_iterator(CMap *cmap, CMapIterator *iterator);
+CIterator* map_iterator(CMap *cmap);
 
-/* 获取下一个数据 */
-CMapNode *map_next(CMapIterator *iterator);
+/* 迭代器当前状态获取key */
+void* map_iterator_key(CIterator *iterator);
+
+/* 迭代器当前状态获取value */
+void* map_iterator_value(CIterator *iterator);
 
 /* 获取key */
 void* mapnode_key(CMapNode *node);
@@ -103,9 +102,8 @@ void* mapnode_key(CMapNode *node);
 /* 获取value */
 void* mapnode_value(CMapNode *node);
 
-#define map_foreach(map, map_it, key, value) \
-    map_iterator(map, &map_it); \
-    for(CMapNode *node = map_next(&map_it); \
-        node != NULL && ((key = mapnode_key(node)) && (value = (mapnode_value(node))) ); \
-        node = map_next(&map_it))
+#define map_foreach(map, key, value) \
+    for(Auto_CIterator it = map_iterator(map); \
+        iterator_next(it) != NULL && \
+        ((key = map_iterator_key(it)) && (value = map_iterator_value(it)));)
 #endif

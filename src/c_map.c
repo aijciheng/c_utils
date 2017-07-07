@@ -7,6 +7,12 @@
 #define DEFAULT_CAPACITY 256
 #define DEFAULT_LOADFACTOR 0.75
 
+typedef struct CMapIterator {
+    int index;
+    CMapNode *node;
+    CMap *cmap; 
+} CMapIterator;
+
 static void put_entry(CMap *cmap, int i, void *key, void *value);
 static void add_entry(CMap *cmap, int i, void *key, void *value);
 static void resize(CMap *cmap, int new_capacity);
@@ -14,6 +20,8 @@ static int index_for(CMapKeyConf *conf, void *key, int len);
 static int contain_key(CMap *cmap, void *key);
 static int key_equals(CMapKeyConf *conf, void *key1, void *key2, int len);
 static size_t key_len(CMap *cmap, void *key);
+static void destroy_map_iterator(void *it);
+static void *map_next(void *it);
 
 static CMap* create_map_with_params(int num, size_t key_type_size_t,
                                     long (*hash_code)(void*key),
@@ -150,31 +158,78 @@ void destroy_map(CMap *cmap) {
     }
 }
 
-void map_iterator(CMap *cmap, CMapIterator *iterator) {
-    if (cmap == NULL || iterator == NULL) {
-        return;
+CIterator* map_iterator(CMap *cmap) {
+    if (cmap == NULL) {
+        return NULL;
     }
-    iterator->index = 0;
-    iterator->node = NULL;
-    iterator->cmap = cmap;
+
+    CIterator *iterator = create_iterator();
+    if (iterator != NULL) {
+        CMapIterator *map_iterator = (CMapIterator*)malloc(sizeof(CMapIterator));
+        if (map_iterator != NULL) {
+            map_iterator->index = 0;
+            map_iterator->node = NULL;
+            map_iterator->cmap = cmap;
+        } else {
+            destroy_iterator(iterator);
+            return NULL;
+        }
+        iterator->iterator_impl = map_iterator;
+        iterator->destroy_iterator = destroy_map_iterator;
+        iterator->next = map_next;
+        return iterator;
+    }     
+    return NULL;
 }
 
-CMapNode *map_next(CMapIterator *iterator) {
-    if (iterator == NULL) {
+void* map_iterator_key(CIterator *iterator) {
+    if (iterator == NULL || iterator->iterator_impl == NULL) {
         return NULL;
     }
-    if (iterator->cmap == NULL) {
+
+    CMapIterator *map_iterator = (CMapIterator*)iterator;
+    if (map_iterator == NULL) {
         return NULL;
     }
-    for (int i = iterator->index; i < iterator->cmap->capacity; i++) {
-        CMapNode *node = iterator->node;
+    return mapnode_key(map_iterator->node);
+}
+
+void* map_iterator_value(CIterator *iterator) {
+    if (iterator == NULL || iterator->iterator_impl == NULL) {
+        return NULL;
+    }
+    
+    CMapIterator *map_iterator = (CMapIterator*)iterator;
+    if (map_iterator == NULL) {
+        return NULL;
+    }
+    return mapnode_value(map_iterator->node);
+}
+
+static void destroy_map_iterator(void *iterator) {
+    CMapIterator *map_iterator = (CMapIterator*)iterator;
+    if (map_iterator != NULL) {
+        free(map_iterator);
+    }
+}
+
+static void* map_next(void *iterator) {
+    CMapIterator *map_iterator = (CMapIterator*)iterator;
+    if (map_iterator == NULL) {
+        return NULL;
+    }
+    if (map_iterator->cmap == NULL) {
+        return NULL;
+    }
+    for (int i = map_iterator->index; i < map_iterator->cmap->capacity; i++) {
+        CMapNode *node = map_iterator->node;
         if (node != NULL && node->next != NULL) {
-            iterator->node = node->next;
+            map_iterator->node = node->next;
             return node->next;
         } else {
-            while (i < iterator->cmap->capacity && (node = iterator->cmap->buckets[i++]) == NULL);
-            iterator->node = node;
-            iterator->index = i;
+            while (i < map_iterator->cmap->capacity && (node = map_iterator->cmap->buckets[i++]) == NULL);
+            map_iterator->node = node;
+            map_iterator->index = i;
             return node;
         }
     }
