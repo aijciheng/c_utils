@@ -100,7 +100,7 @@ void test_string_map() {
     void *tvalue;
     count = 0;
     map_foreach(map, tkey, tvalue) {
-       count++; 
+        count++; 
     }
     assert(count == COUNT - 1);
     printf("count : %d\n", count);
@@ -356,7 +356,7 @@ void test_char_array_map() {
     void *tvalue;
     count = 0;
     map_foreach(map, tkey, tvalue) {
-       count++; 
+        count++; 
     }
     assert(count == COUNT - 1);
     printf("test char array map foreach is ok.\n");

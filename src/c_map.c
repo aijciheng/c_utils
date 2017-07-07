@@ -187,7 +187,7 @@ void* map_iterator_key(CIterator *iterator) {
         return NULL;
     }
 
-    CMapIterator *map_iterator = (CMapIterator*)iterator;
+    CMapIterator *map_iterator = (CMapIterator*)(iterator->iterator_impl);
     if (map_iterator == NULL) {
         return NULL;
     }
@@ -199,7 +199,7 @@ void* map_iterator_value(CIterator *iterator) {
         return NULL;
     }
     
-    CMapIterator *map_iterator = (CMapIterator*)iterator;
+    CMapIterator *map_iterator = (CMapIterator*)(iterator->iterator_impl);
     if (map_iterator == NULL) {
         return NULL;
     }
@@ -222,16 +222,15 @@ static void* map_next(void *iterator) {
         return NULL;
     }
     for (int i = map_iterator->index; i < map_iterator->cmap->capacity; i++) {
-        CMapNode *node = map_iterator->node;
-        if (node != NULL && node->next != NULL) {
-            map_iterator->node = node->next;
-            return node->next;
+        CMapNode *node = map_iterator->node != NULL ? map_iterator->node->next : NULL;
+        if (node != NULL) {
+            map_iterator->node = node;
         } else {
             while (i < map_iterator->cmap->capacity && (node = map_iterator->cmap->buckets[i++]) == NULL);
             map_iterator->node = node;
             map_iterator->index = i;
-            return node;
         }
+        return node;
     }
 
     return NULL;
