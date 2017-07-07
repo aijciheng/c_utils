@@ -8,6 +8,7 @@ CMap-哈希表 <br>
 CSet-集合 <br>
 CList-动态数组 <br>
 CLinkedList-双向链表,可实现queue和stack <br>
+CIterator-迭代器,CMap和CSet已实现 <br>
 
 常用方法: <br>
 c_string.h-字符串相关方法 <br>
