@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "c_sort.h"
+
 #define DEFAULT_CAPACITY 10
 
 static void ensure_list(CList *clist, int min_capacity);
@@ -48,6 +50,14 @@ void list_remove(CList *clist, int index) {
     } 
     clist->array[clist->size - 1] = NULL;
     clist->size--;
+}
+
+void list_sort(CList *clist, int (*compare)(void *value1, void *value2)) {
+    if (clist == NULL) {
+        return;
+    }
+
+    quick_sort(compare, clist->array, 0, clist->size);
 }
 
 void destroy_list(CList *clist) {

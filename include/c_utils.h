@@ -9,6 +9,8 @@
 
 #include "c_string.h"
 
+#include "c_sort.h"
+
 #include "system.h"
 
 #endif
