@@ -16,7 +16,7 @@ $(LIB_NAME):$(LIB_OBJ)
 	ar rcs $(LIB_NAME) $(addprefix $(LIB_PATH), $^)
 
 .c.o:
-	gcc -I $(INCLUDE_PATH) -c -o $(LIB_PATH)$@ $^ -std=c99 -g
+	gcc -I $(INCLUDE_PATH) -c -o $(LIB_PATH)$@ $^ -std=c99 -O2
 
 .PHONY:clean $(CMD)
 
